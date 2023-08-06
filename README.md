@@ -36,6 +36,6 @@ The application is built using the following technologies:
 - Java
 - Spring Boot
 - Thymeleaf (for server-side HTML templating)
-- MySQL (or any other relational database)
+- MySQL 
 
 
