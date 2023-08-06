@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Bibliotheek</title>
+<link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+           <link rel="stylesheet" th:href="@{/css/boek.css}" />
+</head>
+<body>
+	<div th:replace="~{fragments/navbar :: navbar}"> </div>
+	<h1 th:text="#{populaireBoeken}"></h1>
+	<div th:replace="~{fragments/boek :: boekenlijst}"> </div>
+	
+	 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+        crossorigin="anonymous">
+</script>
+<script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js">
+</script>
+</body>
+</html>

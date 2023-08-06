@@ -1,0 +1,12 @@
+.navbar-header{
+    text-align:center;
+    background-color: red !important;
+}
+
+.navbar-toggle {
+    float: none;
+    margin-right:0;
+}
+#logout{
+	float:right;
+}

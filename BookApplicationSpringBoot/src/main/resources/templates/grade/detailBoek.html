@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title th:text="${boek.getNaam}"></title>
+<link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+           <link rel="stylesheet" th:href="@{/css/detailBoek.css}" />
+          
+</head>
+<body>
+	<div th:replace="~{fragments/navbar :: navbar}"> </div>
+	
+	
+	<div th:if="${favorietError}" th:text="${favorietError}" id="favorietenError"></div>
+	<div th:if="${favorietMessage}" th:text="${favorietMessage}" id="favorietenMessage"></div>
+	<div class="boek">
+	<div class="imageHolder">
+    <img th:src="${boek.getImageURL}" th:alt="| ${boek.naam} Image|" class="imageBoek"/>
+  </div>
+  
+  <div id="boekInfoHolder">
+  <div id="boekInfo">
+  <h1 th:text="${boek.getNaam}"></h1>
+  	<p id="auteurs"><span th:each="auteur, iter : ${boek.getAuteurs}">
+  	<span th:if="${iter.first}" th:text="#{van}"></span>
+    <span th:text="${auteur}"></span>
+    <span th:if="${not iter.last}">, </span>
+</span>
+	</p>
+	<p th:text="|ISBN: ${boek.getISBNNummer}|"> </p>
+	<p th:text="|#{prijs}: ${#numbers.formatDecimal(boek.getAankoopprijs,1,2)}&euro;|"> </p>
+	<div id="starHolder"> <img id="star" th:src="@{/svg/star.svg}"></img><span th:text="${boek.getFavorieten.size()}" id="aantal"></span></div>
+	<div id="favorietHolder">
+<form id="favorietForm" th:action="@{/boeken/favoriet}" method="post" th:object="${favoriet}">
+  <input type="hidden" name="boek" th:value="${boek.id}"  />
+    <button type="submit">
+    <th:block th:if="${gebruiker.hasFavoriet(boek)}"> 
+     <img id="heartSolid" th:src="@{/svg/heartSolid.svg}" class="icon">
+     </th:block>
+     <th:block th:unless="${gebruiker.hasFavoriet(boek)}"> 
+    <img id="heart" th:src="@{/svg/heart.svg}" class="icon"></img>
+     </th:block>
+     </button>
+</form></div>
+
+	<div id="locaties">
+		<p th:if="${boek.getLocaties().size() == 1}" th:text="#{1locatie}" class="locatieHeader"></p>
+		<p th:if="${boek.getLocaties().size() > 1}" th:text="|${boek.getLocaties().size()} #{locaties}|"class="locatieHeader"></p>
+		<p th:if="${boek.getLocaties().size() == 0}" th:text="#{geenLocaties}"class="locatieHeader"></p>
+
+	
+		<table th:if="${boek.getLocaties.size()>0}">
+  		<thead>
+   		<tr>
+      	<th th:text="#{plaats}"></th>
+      	<th>Code 1</th>
+      	<th>Code 2</th>
+    	</tr>
+  		</thead>
+  		<tbody>
+    	<tr th:each="locatie, iterLocatie: ${boek.getLocaties}" class="locatie">
+      	<td th:text="${locatie.plaatsnaam}"></td>
+      	<td th:text="${locatie.plaatscode1}"></td>
+      	<td th:text="${locatie.plaatscode2}"></td>
+    	</tr>
+  		</tbody>
+		</table>
+	</div>
+
+	
+	</div>
+
+</div>
+<th:block th:if="${#authorization.expression('hasRole(''ADMIN'')')}">	  
+<form id="maakBoek" th:action="@{/updateBoek}" method="get">
+ <input type="hidden" name="boek" th:value="${boek.id}" />
+ <Button id="updateBoekButton" type="submit"> <img id="edit" th:src="@{/svg/edit.svg}"></Button>
+</form>
+</th:block>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+        crossorigin="anonymous">
+</script>
+<script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+</html>

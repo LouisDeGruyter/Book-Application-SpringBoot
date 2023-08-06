@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Bibliotheek</title>
+<link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+           <link rel="stylesheet" th:href="@{/css/boek.css}" />
+</head>
+<body>
+	
+	<div th:fragment="boekenlijst" id="wrapper">
+	<div th:if="${favorietError}" th:text="${favorietError}" id="favorietenError"></div>
+	<div th:if="${favorietMessage}" th:text="${favorietMessage}" id="favorietenMessage"></div>
+	<div id="boekenlijst" >
+	
+	<div th:each="boek, iterBoek: ${boekenList}" class="boek">
+	<a th:href="|/boeken/${boek.getId}|">
+	<div id="boekPadding">
+  
+  	
+	<div class="imageHolder">
+    <img th:src="${boek.getImageURL}" th:alt="|${boek.getNaam} Image|" class="imageBoek"/>
+    
+  </div>
+  <div id="boekInfoHolder">
+  <div id="boekInfo">
+  <form id="favorietForm" th:action="@{/boeken/favoriet}" method="post" th:object="${favoriet}">
+  
+  <input type="hidden" name="boek" th:value="${boek.id}"  />
+    <button type="submit">
+    <th:block th:if="${gebruiker.hasFavoriet(boek)}"> 
+     <img id="heartSolid" th:src="@{/svg/heartSolid.svg}" class="icon">
+     </th:block>
+     <th:block th:unless="${gebruiker.hasFavoriet(boek)}"> 
+    <img id="heart" th:src="@{/svg/heart.svg}" class="icon"></img>
+     </th:block>
+     </button>
+     
+</form>
+  <h5 th:text="${boek.getNaam}"></h5>
+  	<h6><span th:each="auteur, iter : ${boek.getAuteurs}">
+    <span th:text="${auteur}"></span>
+    <span th:if="${not iter.last}">, </span>
+</span>
+</h6>
+</div>
+</div>
+</div>
+</a>
+  </div>
+
+</div>
+	</div>
+
+
+
+
+	
+
+	 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+        crossorigin="anonymous">
+</script>
+
+<script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+</html>

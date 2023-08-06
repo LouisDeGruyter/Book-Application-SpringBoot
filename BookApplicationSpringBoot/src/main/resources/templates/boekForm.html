@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Boek Applicatie</title>
+ <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+          <link rel="stylesheet" th:href="@{/css/boekform.css}" />
+</head>
+<body>
+	<div th:replace="~{fragments/navbar :: navbar}"> </div>
+	<div id="wrapper">
+	<div th:if="${succesMessage}" class="success-message">
+    
+</div>
+	<h1 th:if="${formBoek.id==null}" th:text="#{maakBoek}"></h1>
+	<h1 th:unless="${formBoek.id==null}" th:text="#{updateBoek}"></h1>
+	<h2 th:text="${succesMessage}" class="success-message"></h2>
+	<form th:action="@{/maakBoek}" method="post" th:object="${formBoek}" >
+    <!-- boek -->
+    <div>
+        <label for="naam" th:text="|#{titel}:|"></label>
+        <input type="text" id="naam" name="naam" th:field="*{naam}" required/>
+        <span th:if="${#fields.hasErrors('naam')}" th:errors="*{naam}"></span>
+    </div>
+    <div>
+        <label for="ISBNNummer">ISBN:</label>
+        <input type="text" id="ISBNNummer" name="ISBNNummer" th:field="*{ISBNNummer}" required/>
+        <span th:if="${#fields.hasErrors('ISBNNummer')}" th:errors="*{ISBNNummer}"></span>
+    </div>
+    <div>
+        <label for="aankoopprijs" th:text="|#{aankoopprijs}:|"></label>
+        <input type="number" id="aankoopprijs" name="aankoopprijs" th:field="*{aankoopprijs}" step="0.01" required/>
+        <span th:if="${#fields.hasErrors('aankoopprijs')}" th:errors="*{aankoopprijs}"></span>
+    </div>
+    <div>
+        <label for="imageURL"th:text="|#{imageURL}:|"></label>
+        <input type="text" id="imageURL" name="imageURL" th:field="*{imageURL}" required/>
+        <span th:if="${#fields.hasErrors('imageURL')}" th:errors="*{imageURL}"></span>
+    </div>
+    
+    <!-- auteurs -->
+   <div class="author-names">
+    <div>
+        <label for="voornaam1" th:text="|#{voornaamAuteur} 1:|"></label>
+        <input type="text" id="voornaam1" name="voornaam1" th:field="*{voornaam1}" required />
+        <span th:if="${#fields.hasErrors('voornaam1')}" th:errors="*{voornaam1}"></span>
+    </div>
+    <div>
+        <label for="achternaam1" th:text="|#{achternaamAuteur} 1:|"></label>
+        <input type="text" id="achternaam1" name="achternaam1" th:field="*{achternaam1}" required />
+        <span th:if="${#fields.hasErrors('achternaam1')}" th:errors="*{achternaam1}"></span>
+    </div>
+    <div>
+        <label for="voornaam2" th:text="|#{voornaamAuteur} :|"></label>
+        <input type="text" id="voornaam2" name="voornaam2" th:field="*{voornaam2}" />
+        <span th:if="${#fields.hasErrors('voornaam2')}" th:errors="*{voornaam2}"></span>
+    </div>
+    <div>
+        <label for="achternaam2" th:text="|#{achternaamAuteur} 2:|"></label>
+        <input type="text" id="achternaam2" name="achternaam2" th:field="*{achternaam2}" />
+        <span th:if="${#fields.hasErrors('achternaam2')}" th:errors="*{achternaam2}"></span>
+    </div>
+    <div>
+        <label for="voornaam3" th:text="|#{voornaamAuteur} 3:|"></label>
+        <input type="text" id="voornaam3" name="voornaam3" th:field="*{voornaam3}" />
+        <span th:if="${#fields.hasErrors('voornaam3')}" th:errors="*{voornaam3}"></span>
+    </div>
+    <div>
+        <label for="achternaam3" th:text="|#{achternaamAuteur} 3:|"></label>
+        <input type="text" id="achternaam3" name="achternaam3" th:field="*{achternaam3}" />
+        <span th:if="${#fields.hasErrors('achternaam3')}" th:errors="*{achternaam3}"></span>
+    </div>
+</div>
+
+    <!--  locations -->
+    <div class="locations">
+    <div>
+    <label for="plaatscode11" th:text="|#{plaatscode} #{locatie} 1:|"></label>
+    <input type="number" id="plaatscode11" name="plaatscode11" th:field="*{plaatscode11}" required />
+    <span th:if="${#fields.hasErrors('plaatscode11')}" th:errors="*{plaatscode11}" class="error-message"></span>
+</div>
+<div>
+    <label for="plaatscode12" th:text="|#{plaatscode} #{locatie} 1 (#{vervolg}):|"></label>
+    <input type="number" id="plaatscode12" name="plaatscode12" th:field="*{plaatscode12}" required />
+    <span th:if="${#fields.hasErrors('plaatscode12')}" th:errors="*{plaatscode12}" class="error-message"></span>
+</div>
+<div>
+    <label for="plaatsnaam1" th:text="|#{plaatsnaam} #{locatie} 1:|"></label>
+    <input type="text" id="plaatsnaam1" name="plaatsnaam1" th:field="*{plaatsnaam1}" required />
+    <span th:if="${#fields.hasErrors('plaatsnaam1')}" th:errors="*{plaatsnaam1}" class="error-message"></span>
+</div>
+
+<div>
+    <label for="plaatscode21" th:text="|#{plaatscode} #{locatie} 2:|"></label>
+    <input type="number" id="plaatscode21" name="plaatscode21" th:field="*{plaatscode21}" />
+    <span th:if="${#fields.hasErrors('plaatscode21')}" th:errors="*{plaatscode21}" class="error-message"></span>
+</div>
+<div>
+    <label for="plaatscode22" th:text="|#{plaatscode} #{locatie} 2 (#{vervolg}):|"></label>
+    <input type="number" id="plaatscode22" name="plaatscode22" th:field="*{plaatscode22}" />
+    <span th:if="${#fields.hasErrors('plaatscode22')}" th:errors="*{plaatscode22}" class="error-message"></span>
+</div>
+<div>
+    <label for="plaatsnaam2" th:text="|#{plaatsnaam} #{locatie} 2:|"></label>
+    <input type="text" id="plaatsnaam2" name="plaatsnaam2" th:field="*{plaatsnaam2}" />
+    <span th:if="${#fields.hasErrors('plaatsnaam2')}" th:errors="*{plaatsnaam2}" class="error-message"></span>
+</div>
+
+<div>
+    <label for="plaatscode31" th:text="|#{plaatscode} #{locatie} 3:|"></label>
+    <input type="number" id="plaatscode31" name="plaatscode31" th:field="*{plaatscode31}" />
+    <span th:if="${#fields.hasErrors('plaatscode31')}" th:errors="*{plaatscode31}" class="error-message"></span>
+</div>
+<div>
+    <label for="plaatscode32" th:text="|#{plaatscode} #{locatie} 3 (#{vervolg}):|"></label>
+    <input type="number" id="plaatscode32" name="plaatscode32" th:field="*{plaatscode32}" />
+    <span th:if="${#fields.hasErrors('plaatscode32')}" th:errors="*{plaatscode32}" class="error-message"></span>
+</div>
+<div>
+    <label for="plaatsnaam3" th:text="|#{plaatsnaam} #{locatie} 3:|"></label>
+    <input type="text" id="plaatsnaam3" name="plaatsnaam3" th:field="*{plaatsnaam3}" />
+    <span th:if="${#fields.hasErrors('plaatsnaam3')}" th:errors="*{plaatsnaam3}" class="error-message"></span>
+</div>
+</div>
+	<input type="hidden" th:field="*{originalISBN}">
+	<input type="hidden" th:field="*{id}">
+	<div th:if="${formBoek.id==null}">
+	<button type="submit" th:text="#{maak}"></button>
+	</div>
+	<div th:unless="${formBoek.id==null}">
+	<button type="submit" th:text="#{update}"></button>
+	</div>
+  
+</form>
+</div>
+	
+	
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+        crossorigin="anonymous">
+</script>
+<script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+
+</html>
